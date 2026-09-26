@@ -1,0 +1,10 @@
+services:
+
+  web:
+
+    build: .
+
+    container_name: devops-web
+
+    ports:
+      - "8081:80"
