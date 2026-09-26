@@ -1,0 +1,34 @@
+name: Docker Build Test
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Build Docker image
+        run: docker build -t devops-practical:test .
+
+      - name: Start container
+        run: docker run -d --name web-test -p 8080:80 devops-practical:test
+
+      - name: Wait for application
+        run: sleep 3
+
+      - name: Test application
+        run: curl --fail http://localhost:8080
